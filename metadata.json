@@ -1,0 +1,6 @@
+{
+  "name": "Renew Home Improvement",
+  "description": "Customer acquisition marketing email and drip outreach engine for Renew Home Improvement across Worcester County and Tri-State homeowners with prospects management, campaigns, inbox replies, text approval, and Renew app pipeline.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

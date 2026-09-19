@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Mark’s Lead Dashboard | Renew Home Improvement</title>
+  <link rel="icon" href="assets/renew-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+  <style>
+    .auth-container {
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 36px 32px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .auth-icon {
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: #fdf2f2;
+      color: var(--red);
+      font-size: 28px;
+      border: 2px solid #fed7d7;
+    }
+    .auth-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #edf2f7;
+      color: #4a5568;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin: 24px 0 32px;
+    }
+    .stat-card {
+      background: #fff;
+      padding: 18px 20px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 14px rgba(0,0,0,.04);
+    }
+    .stat-card b {
+      display: block;
+      font-size: 28px;
+      color: var(--navy);
+      font-family: "DM Serif Display", serif;
+    }
+    .stat-card span {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 99px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .filter-btn.active {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+    }
+    .lead-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    .lead-header {
+      padding: 20px 24px;
+      background: #faf8f5;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .lead-id-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lead-title {
+      font-family: "DM Serif Display", serif;
+      font-size: 22px;
+      margin: 0;
+      color: var(--ink);
+    }
+    .lead-body {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 28px;
+    }
+    @media(max-width: 860px) {
+      .lead-body {
+        grid-template-columns: 1fr;
+      }
+    }
+    .info-section {
+      margin-bottom: 20px;
+    }
+    .info-section h4 {
+      margin: 0 0 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      border-bottom: 1px solid #eee;
+      padding-bottom: 6px;
+    }
+    .contact-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+    .contact-line a {
+      color: var(--red);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-line a:hover {
+      text-decoration: underline;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .tag.pill {
+      border-radius: 99px;
+    }
+    .tag.new { background: #e3f2fd; color: #1565c0; }
+    .tag.confirmed { background: #e8f5e9; color: #2e7d32; }
+    .tag.service { background: #fff3e0; color: #e65100; }
+    .tag.urgent { background: #ffebee; color: #c62828; }
+    
+    .ai-box {
+      background: #f4f8fd;
+      border: 1px solid #c8dcf5;
+      border-radius: 14px;
+      padding: 18px 20px;
+      position: relative;
+    }
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      background: #183967;
+      color: #fff;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .ai-summary {
+      font-size: 14.5px;
+      color: #1e2d3d;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .ai-list {
+      margin: 8px 0 12px;
+      padding-left: 20px;
+      font-size: 13.5px;
+      color: #2c3e50;
+    }
+    .ai-list li {
+      margin-bottom: 4px;
+    }
+    .ai-action {
+      background: #fff;
+      border-left: 3px solid #183967;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      color: #102a43;
+      margin-top: 10px;
+    }
+    .lead-photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .lead-photo-thumb {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      transition: transform .15s ease;
+    }
+    .lead-photo-thumb:hover {
+      transform: scale(1.04);
+      border-color: var(--red);
+    }
+    .lead-photo-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .walkthrough-box {
+      background: #fffdf7;
+      border: 1px solid #f0e6cf;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      z-index: 100;
+      place-items: center;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: grid;
+    }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.5);
+    }
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: #fff;
+      border: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/renew-logo.png" alt="Renew Logo">
+      <span><b>RENEW</b><small>MARK’S LEAD VIEW</small></span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span id="user-display" class="experience" style="display: none;">Mark Karlon · Authorized</span>
+      <a href="index.html" class="experience" style="text-decoration: none; color: #fff;">← Home Vision</a>
+      <button id="logout-btn" class="experience" style="display: none; background: rgba(255,255,255,0.15); border: 0; cursor: pointer;">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="screen paper active" style="padding-top: 86px;">
+    <div class="content wide">
+      
+      <!-- AUTHENTICATION GATE -->
+      <div id="auth-gate" class="auth-container">
+        <div class="auth-icon">🔒</div>
+        <span class="auth-badge">Privileged Contractor Access</span>
+        <h2 style="font-size: 28px; margin-bottom: 10px;">Mark’s Lead Dashboard</h2>
+        <p class="intro" style="font-size: 15px; margin-bottom: 24px;">
+          This dashboard contains private homeowner inquiries, walkthrough requests, and project photos. Authentication is required before data is released from Firestore.
+        </p>
+
+        <form id="auth-form" style="text-align: left;">
+          <label style="font-size: 14px; margin-bottom: 4px;">Contractor Account
+            <input type="text" id="auth-email" value="markkarlon@yahoo.com" required placeholder="markkarlon@yahoo.com">
+          </label>
+          <label style="font-size: 14px; margin-top: 14px; margin-bottom: 4px;">Access Pass / PIN
+            <input type="password" id="auth-password" value="renew2026" required placeholder="Enter password">
+          </label>
+          <div id="auth-error" class="notice" style="display: none; border-left-color: var(--red); background: #fff5f5; color: #c53030; padding: 10px; font-size: 14px; margin: 14px 0;"></div>
+          <button type="submit" class="button primary" style="margin-top: 18px;">Unlock Mark’s Dashboard</button>
+        </form>
+
+        <p style="margin-top: 20px; font-size: 13px; color: var(--muted);">
+          Authorized staff only · Protected by Firestore Rules & Server Authorization
+        </p>
+      </div>
+
+      <!-- MAIN AUTHORIZED DASHBOARD VIEW -->
+      <div id="dashboard-view" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px; margin-bottom: 10px;">
+          <div>
+            <p class="eyebrow" style="margin-bottom: 4px;">Webster & Worcester County, MA</p>
+            <h1 style="font-size: clamp(30px, 4vw, 42px); margin: 0;">Homeowner Project Submissions</h1>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button id="refresh-btn" class="button subtle" style="margin-top: 0; min-height: 42px; padding: 8px 18px;">↻ Refresh Leads</button>
+            <a href="index.html#service" class="button primary" style="min-height: 42px; padding: 8px 18px; text-decoration: none;">+ Test Home Vision</a>
+          </div>
+        </div>
+
+        <p class="intro">
+          Review customer inquiries, consult server-side Gemini walkthrough briefs, check requested dates against Mark’s schedule, and confirm appointments.
+        </p>
+
+        <!-- Stats Counter -->
+        <div class="stats-bar">
+          <div class="stat-card">
+            <b id="stat-total">0</b>
+            <span>Total Submissions</span>
+          </div>
+          <div class="stat-card">
+            <b id="stat-walkthroughs">0</b>
+            <span>Walkthroughs Requested</span>
+          </div>
+          <div class="stat-card">
+            <b id="stat-photos">0</b>
+            <span>With Customer Photos</span>
+          </div>
+          <div class="stat-card">
+            <b id="stat-ai">0</b>
+            <span>Gemini AI Briefs Ready</span>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">All Leads (<span id="count-all">0</span>)</button>
+          <button class="filter-btn" data-filter="walkthrough">Walkthroughs Requested</button>
+          <button class="filter-btn" data-filter="kitchen">Kitchens</button>
+          <button class="filter-btn" data-filter="bathroom">Bathrooms</button>
+          <button class="filter-btn" data-filter="deck">Decks & Outdoor</button>
+          <button class="filter-btn" data-filter="addition">Additions</button>
+        </div>
+
+        <!-- Leads List -->
+        <div id="leads-container">
+          <div class="notice integration">Connecting to secure Firestore leads collection...</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Photo Lightbox Modal -->
+  <div id="photo-modal" class="modal-overlay" onclick="closeModal()">
+    <button class="close-modal" onclick="closeModal()">×</button>
+    <img id="modal-image" class="modal-img" src="" alt="Full resolution project photo" onclick="event.stopPropagation()">
+  </div>
+
+  <script>
+    let currentLeads = [];
+    let currentFilter = 'all';
+
+    const tokenKey = 'renew_mark_token';
+
+    function getAuthToken() {
+      return localStorage.getItem(tokenKey) || sessionStorage.getItem(tokenKey);
+    }
+
+    function setAuthToken(token) {
+      localStorage.setItem(tokenKey, token);
+    }
+
+    function clearAuthToken() {
+      localStorage.removeItem(tokenKey);
+      sessionStorage.removeItem(tokenKey);
+    }
+
+    // Modal helpers
+    function openModal(src) {
+      const modal = document.getElementById('photo-modal');
+      document.getElementById('modal-image').src = src;
+      modal.classList.add('active');
+    }
+    function closeModal() {
+      document.getElementById('photo-modal').classList.remove('active');
+    }
+
+    // Escape HTML helper
+    function escape(str) {
+      return String(str || '').replace(/[&<>'"]/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+      }[ch]));
+    }
+
+    // Check Auth State on Page Load
+    async function checkAuth() {
+      const token = getAuthToken();
+      if (!token) {
+        showAuthGate();
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const user = await res.json();
+          showDashboard(user);
+          loadLeads();
+        } else {
+          clearAuthToken();
+          showAuthGate();
+        }
+      } catch (e) {
+        showAuthGate();
+      }
+    }
+
+    function showAuthGate() {
+      document.getElementById('auth-gate').style.display = 'block';
+      document.getElementById('dashboard-view').style.display = 'none';
+      document.getElementById('user-display').style.display = 'none';
+      document.getElementById('logout-btn').style.display = 'none';
+    }
+
+    function showDashboard(user) {
+      document.getElementById('auth-gate').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = 'block';
+      document.getElementById('user-display').style.display = 'inline-block';
+      document.getElementById('user-display').textContent = `${user.name || 'Mark Karlon'} · Authorized`;
+      document.getElementById('logout-btn').style.display = 'inline-block';
+    }
+
+    // Login Form Submission
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('auth-email').value;
+      const password = document.getElementById('auth-password').value;
+      const errorBox = document.getElementById('auth-error');
+      errorBox.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.token) {
+          setAuthToken(data.token);
+          showDashboard(data.user);
+          loadLeads();
+        } else {
+          errorBox.textContent = data.error || 'Invalid credentials.';
+          errorBox.style.display = 'block';
+        }
+      } catch (err) {
+        errorBox.textContent = 'Connection error. Please try again.';
+        errorBox.style.display = 'block';
+      }
+    });
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      clearAuthToken();
+      showAuthGate();
+    });
+
+    // Load Leads from Server (Protected by requireMarkAuth)
+    async function loadLeads() {
+      const token = getAuthToken();
+      const container = document.getElementById('leads-container');
+      container.innerHTML = '<div class="notice integration">Retrieving verified leads from Cloud Firestore...</div>';
+
+      try {
+        const res = await fetch('/api/leads', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (res.status === 401 || res.status === 403) {
+          clearAuthToken();
+          showAuthGate();
+          return;
+        }
+
+        const data = await res.json();
+        currentLeads = data.leads || [];
+        updateStats();
+        renderLeads();
+      } catch (err) {
+        container.innerHTML = `<div class="notice" style="border-left-color: var(--red); background:#fff5f5; color:#c53030;">Failed to load leads: ${err.message}</div>`;
+      }
+    }
+
+    function updateStats() {
+      document.getElementById('stat-total').textContent = currentLeads.length;
+      document.getElementById('count-all').textContent = currentLeads.length;
+      
+      const walkthroughs = currentLeads.filter(l => l.walkthrough && l.walkthrough.preferredDate && l.walkthrough.preferredDate !== 'TBD').length;
+      document.getElementById('stat-walkthroughs').textContent = walkthroughs;
+
+      const photos = currentLeads.filter(l => l.photos && l.photos.length > 0).length;
+      document.getElementById('stat-photos').textContent = photos;
+
+      const aiCount = currentLeads.filter(l => l.ai && l.ai.summary).length;
+      document.getElementById('stat-ai').textContent = aiCount;
+    }
+
+    function renderLeads() {
+      const container = document.getElementById('leads-container');
+      let filtered = currentLeads;
+
+      if (currentFilter === 'walkthrough') {
+        filtered = currentLeads.filter(l => l.walkthrough && l.walkthrough.status === 'requested');
+      } else if (currentFilter !== 'all') {
+        filtered = currentLeads.filter(l => l.project && l.project.serviceId === currentFilter);
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="review-card" style="padding: 45px 20px; text-align: center;">
+            <p style="font-size: 20px; color: var(--navy); margin: 0 0 10px; font-family: 'DM Serif Display', serif;">No project submissions match this filter.</p>
+            <p style="color: var(--muted); margin: 0 0 20px;">Use the button below to submit a test Home Vision intake to see the live intake, photo uploads, and Gemini AI analysis.</p>
+            <a href="index.html#service" class="button primary" style="display: inline-block; width: auto; padding: 12px 28px; text-decoration: none;">Build a Home Vision</a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(lead => {
+        const dateFormatted = new Date(lead.submittedAt).toLocaleDateString('en-US', {
+          month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit'
+        });
+
+        const statusClass = lead.status === 'confirmed' ? 'confirmed' : 'new';
+        const feelList = (lead.project.desiredFeel || []).map(f => `<span class="tag pill" style="background:#eef2f7; color:#334e68; margin-right:4px;">${escape(f)}</span>`).join('');
+        
+        const photoHtml = (lead.photos && lead.photos.length > 0) ? `
+          <div class="info-section">
+            <h4>Homeowner Photos (${lead.photos.length})</h4>
+            <div class="lead-photos-grid">
+              ${lead.photos.map(p => `
+                <div class="lead-photo-thumb" onclick="openModal('${p.dataUrl}')" title="${escape(p.name)}">
+                  <img src="${p.dataUrl}" alt="${escape(p.name)}">
+                </div>
+              `).join('')}
+            </div>
+            ${lead.project.photoNotes ? `<p style="font-size:13px; color:var(--muted); margin-top:6px;"><b>Homeowner notes:</b> ${escape(lead.project.photoNotes)}</p>` : ''}
+          </div>
+        ` : '';
+
+        const missingInfo = (lead.ai?.missingInformation || []).map(item => `<li>${escape(item)}</li>`).join('');
+        const safetyFlags = (lead.ai?.safetyFlags || []).map(item => `<li>⚠️ ${escape(item)}</li>`).join('');
+
+        return `
+          <div class="lead-card" id="card-${lead.leadId}">
+            <div class="lead-header">
+              <div class="lead-id-group">
+                <span class="tag pill ${statusClass}">${escape(lead.status.toUpperCase())}</span>
+                <span class="tag pill service">${escape(lead.project.serviceLabel || 'Remodeling')}</span>
+                <h3 class="lead-title">${escape(lead.customer.name)}</h3>
+              </div>
+              <div style="font-size: 13px; color: var(--muted); font-weight: 500;">
+                Ref: <b>${escape(lead.leadId)}</b> · ${dateFormatted}
+              </div>
+            </div>
+
+            <div class="lead-body">
+              <!-- Left Column: Customer & Project Details -->
+              <div>
+                <div class="info-section">
+                  <h4>Homeowner Contact</h4>
+                  <div class="contact-line">
+                    👤 <b>${escape(lead.customer.name)}</b>
+                    <span style="font-size: 12px; color: var(--muted);">(Prefers: ${escape(lead.customer.preferredContact)})</span>
+                  </div>
+                  <div class="contact-line">
+                    📞 <a href="tel:${escape(lead.customer.phone)}">${escape(lead.customer.phone || 'None provided')}</a>
+                    ${lead.consent.sms ? '<span class="tag" style="background:#e8f5e9; color:#2e7d32; font-size:11px;">SMS Consent Granted</span>' : '<span class="tag" style="background:#f5f5f5; color:#777; font-size:11px;">No SMS</span>'}
+                  </div>
+                  <div class="contact-line">
+                    ✉️ <a href="mailto:${escape(lead.customer.email)}">${escape(lead.customer.email)}</a>
+                  </div>
+                </div>
+
+                <div class="info-section">
+                  <h4>Project Site & Property</h4>
+                  <div style="font-size: 15px; line-height: 1.4;">
+                    📍 <b>${escape(lead.property.address1)}</b><br>
+                    ${escape(lead.property.city)}, ${escape(lead.property.state)} ${escape(lead.property.postalCode)}
+                  </div>
+                </div>
+
+                <div class="info-section">
+                  <h4>Homeowner Stated Vision & Problem</h4>
+                  <p style="margin: 0 0 8px; font-size: 14.5px;">
+                    <b>Current Problem:</b> ${escape(lead.project.problem || 'Not specified')}
+                  </p>
+                  <p style="margin: 0 0 8px; font-size: 14.5px;">
+                    <b>Desired Vision:</b> ${escape(lead.project.vision || 'Not specified')}
+                  </p>
+                  <div style="font-size: 13.5px; color: var(--muted); margin: 6px 0;">
+                    <b>Timeline:</b> ${escape(lead.project.timeline)} · <b>Budget:</b> ${escape(lead.project.budget || 'Not specified')}
+                  </div>
+                  <div style="margin-top: 8px;">
+                    ${feelList}
+                  </div>
+                </div>
+
+                ${photoHtml}
+              </div>
+
+              <!-- Right Column: Gemini Brief & Walkthrough Scheduling -->
+              <div>
+                <!-- Walkthrough Details Box -->
+                <div class="walkthrough-box">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <h4 style="margin:0; border:0; padding:0; color:var(--red);">📅 Walkthrough Request</h4>
+                    <span class="tag pill" style="background:#fff2f2; color:var(--red); font-size:11px;">Status: ${escape(lead.walkthrough.status || 'Requested')}</span>
+                  </div>
+                  <div style="font-size: 14.5px; line-height: 1.5;">
+                    <b>Preferred Window:</b> ${escape(lead.walkthrough.preferredDate)} · ${escape(lead.walkthrough.preferredTime)}<br>
+                    ${lead.walkthrough.alternateDate ? `<b>Alternate Window:</b> ${escape(lead.walkthrough.alternateDate)} · ${escape(lead.walkthrough.alternateTime)}<br>` : ''}
+                    ${lead.walkthrough.notes ? `<b>Access / Notes:</b> ${escape(lead.walkthrough.notes)}<br>` : ''}
+                  </div>
+                  <div style="margin-top: 12px; display: flex; gap: 8px;">
+                    <button class="button primary" style="min-height: 36px; padding: 6px 14px; font-size: 13px; width: auto;" onclick="updateStatus('${lead.leadId}', 'confirmed')">
+                      ✓ Confirm Walkthrough
+                    </button>
+                    <a href="tel:${escape(lead.customer.phone)}" class="button subtle" style="margin-top:0; min-height: 36px; padding: 6px 14px; font-size: 13px; width: auto; text-decoration:none;">
+                      Call Customer
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Gemini AI Contract Brief -->
+                <div class="ai-box">
+                  <div class="ai-badge">✦ Gemini AI Walkthrough Brief</div>
+                  <div style="font-size: 12px; color: #5a6e85; margin-bottom: 8px;">
+                    Classified Trade Scope: <b>${escape(lead.ai?.projectType || lead.project.serviceLabel)}</b>
+                  </div>
+                  
+                  <div class="ai-summary">
+                    <b>Factual Synthesis:</b> ${escape(lead.ai?.summary || 'AI synthesis pending.')}
+                  </div>
+
+                  ${missingInfo ? `
+                    <div style="margin-top: 10px;">
+                      <b style="font-size: 13px; color: #102a43;">Items for Mark to Verify on Site:</b>
+                      <ul class="ai-list">
+                        ${missingInfo}
+                      </ul>
+                    </div>
+                  ` : ''}
+
+                  ${safetyFlags ? `
+                    <div style="margin-top: 10px;">
+                      <b style="font-size: 13px; color: #c53030;">Site & Safety Considerations:</b>
+                      <ul class="ai-list" style="color: #9b2c2c;">
+                        ${safetyFlags}
+                      </ul>
+                    </div>
+                  ` : ''}
+
+                  <div class="ai-action">
+                    <b>Suggested Next Action:</b> ${escape(lead.ai?.suggestedNextAction || 'Call to confirm walkthrough timing.')}
+                  </div>
+                </div>
+
+                <!-- Mark's Private Notes -->
+                <div style="margin-top: 16px;">
+                  <label style="font-size: 13px; margin-bottom: 4px;">Mark’s Internal Project Notes
+                    <textarea id="notes-${lead.leadId}" rows="2" placeholder="Materials, site access, measurements, or follow-up notes...">${escape(lead.markNotes || '')}</textarea>
+                  </label>
+                  <button class="button subtle" style="min-height: 32px; padding: 4px 12px; font-size: 12px; width: auto; margin-top: 6px;" onclick="saveNotes('${lead.leadId}')">
+                    Save Internal Note
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Filter Buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderLeads();
+      });
+    });
+
+    document.getElementById('refresh-btn').addEventListener('click', () => {
+      loadLeads();
+    });
+
+    async function updateStatus(leadId, status) {
+      const token = getAuthToken();
+      try {
+        const res = await fetch(`/api/leads/${leadId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ status, walkthroughStatus: 'confirmed' })
+        });
+        if (res.ok) {
+          const lead = currentLeads.find(l => l.leadId === leadId);
+          if (lead) {
+            lead.status = status;
+            if (lead.walkthrough) lead.walkthrough.status = 'confirmed';
+          }
+          renderLeads();
+        }
+      } catch (e) {
+        alert('Failed to update status');
+      }
+    }
+
+    async function saveNotes(leadId) {
+      const token = getAuthToken();
+      const notes = document.getElementById(`notes-${leadId}`).value;
+      try {
+        const res = await fetch(`/api/leads/${leadId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ markNotes: notes })
+        });
+        if (res.ok) {
+          alert('Note saved to Firestore.');
+        }
+      } catch (e) {
+        alert('Failed to save note.');
+      }
+    }
+
+    // Initialize check
+    checkAuth();
+  </script>
+</body>
+</html>

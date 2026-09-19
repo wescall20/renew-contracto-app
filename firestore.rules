@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isMark() {
+      return isAuthenticated() && 
+        (request.auth.token.email == 'markkarlon@yahoo.com' ||
+         request.auth.token.email == 'paulospeople@gmail.com' ||
+         (exists(/databases/database/documents/users/$(request.auth.uid)) &&
+          get(/databases/database/documents/users/$(request.auth.uid)).data.role in ['admin', 'mark']));
+    }
+
+    match /leads/{leadId} {
+      // Mark or authorized staff can read, update, or delete leads
+      allow read, update, delete: if isMark();
+      // Server / public intake can create leads
+      allow create: if true;
+    }
+
+    match /prospects/{prospectId} {
+      allow read, write: if isMark();
+    }
+
+    match /campaigns/{campaignId} {
+      allow read, write: if isMark();
+    }
+
+    match /inbox/{messageId} {
+      allow read, write: if isMark();
+      allow create: if true;
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isMark());
+      allow write: if isAuthenticated() && (request.auth.uid == userId || isMark());
+    }
+  }
+}

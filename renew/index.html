@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#c41230">
+  <meta name="description" content="Share your home remodeling vision and request a walkthrough with Renew Home Improvement.">
+  <title>Home Vision | Renew Home Improvement</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/renew-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Renew Home Improvement home">
+      <img src="assets/renew-logo.png" alt="">
+      <span><b>RENEW</b><small>HOME IMPROVEMENT</small></span>
+    </a>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a href="dashboard.html" class="experience" style="text-decoration:none; color:#fff; background:rgba(255,255,255,0.14);">Mark’s Lead View →</a>
+      <span class="experience">42 years of experience</span>
+    </div>
+  </header>
+
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+  <main id="app">
+    <section class="screen hero active" data-screen="home" aria-labelledby="home-title">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="script">Your Vision, Our Passion</p>
+        <p class="eyebrow light">Home Vision</p>
+        <h1 id="home-title">Your one-stop shop for home remodeling</h1>
+        <p class="question">“What would you change about your home if you knew what was possible?”</p>
+        <p class="hero-copy">Renew listens to your ideas, exchanges possibilities with you, and brings the details together with experience, craftsmanship, and integrity—serving Webster, Worcester County, and surrounding areas.</p>
+        <div class="stack">
+          <button class="button primary" data-go="service">Build Your Home Vision</button>
+          <button class="button glass" data-go="gallery">See What’s Possible</button>
+        </div>
+        <p class="service-line">Kitchens · Bathrooms · Decks · Additions · Windows · Doors · Siding · Roofing</p>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="gallery" aria-labelledby="gallery-title">
+      <div class="content wide">
+        <button class="back" data-go="home">← Back</button>
+        <p class="eyebrow">Renew completed projects</p>
+        <h2 id="gallery-title">See what’s possible</h2>
+        <p class="intro">Real work gives your ideas something concrete to respond to. A walkthrough is still the best way for Renew to understand your home.</p>
+        <div class="gallery-grid">
+          <figure><img src="assets/hero-kitchen.jpg" alt="Modern kitchen remodel"><figcaption><b>Kitchen remodeling</b><span>Open-concept renovation</span></figcaption></figure>
+          <figure><img src="assets/bathroom.jpg" alt="Custom tiled walk-in shower"><figcaption><b>Bathroom remodeling</b><span>Custom walk-in tile shower</span></figcaption></figure>
+          <figure><img src="assets/deck.jpg" alt="Large finished deck"><figcaption><b>Decks and additions</b><span>Finished outdoor living</span></figcaption></figure>
+          <figure><img src="assets/sunroom.jpg" alt="Sunroom addition"><figcaption><b>Additions</b><span>Four-season room</span></figcaption></figure>
+        </div>
+        <button class="button primary" data-go="service">Build Your Home Vision</button>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="service" aria-labelledby="service-title">
+      <div class="content">
+        <button class="back" data-go="home">← Back</button>
+        <p class="eyebrow">Step 1 of 7</p>
+        <h2 id="service-title">Which Renew service are you thinking about?</h2>
+        <p class="intro">Choose the closest fit. Mark can refine the scope during a walkthrough.</p>
+        <div class="choice-grid" id="service-choices"></div>
+        <button class="button primary next" data-next="details" disabled>Continue</button>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="details" aria-labelledby="details-title">
+      <div class="content">
+        <button class="back" data-go="service">← Back</button>
+        <p class="eyebrow">Step 2 of 7</p>
+        <h2 id="details-title">What would you like to change?</h2>
+        <p class="intro">Plain language is best. This becomes structured project information for Renew.</p>
+        <form id="details-form" class="form-grid">
+          <label class="full">What is bothering you most?<textarea name="problem" rows="4" required placeholder="The layout is cramped, the cabinets are worn, and…"></textarea></label>
+          <label class="full">What would you like it to become?<textarea name="vision" rows="4" required placeholder="A brighter, more open kitchen where…"></textarea></label>
+          <label>Ideal timeline<select name="timeline" required><option value="">Choose one</option><option>As soon as practical</option><option>1–3 months</option><option>3–6 months</option><option>6–12 months</option><option>Planning ahead</option></select></label>
+          <label>Approximate budget <span class="optional">optional</span><select name="budget"><option value="">Not sure yet</option><option>Under $5,000</option><option>$5,000–$15,000</option><option>$15,000–$30,000</option><option>$30,000+</option></select></label>
+        </form>
+        <button class="button primary next" data-validate="details-form" data-next="feel">Continue</button>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="feel" aria-labelledby="feel-title">
+      <div class="content">
+        <button class="back" data-go="details">← Back</button>
+        <p class="eyebrow">Step 3 of 7</p>
+        <h2 id="feel-title">How should the finished space feel?</h2>
+        <p class="intro">Choose one or more. These become design cues—not a substitute for listening.</p>
+        <div class="choice-grid two" id="feel-choices"></div>
+        <button class="button primary next" data-next="photos" disabled>Continue</button>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="photos" aria-labelledby="photos-title">
+      <div class="content">
+        <button class="back" data-go="feel">← Back</button>
+        <p class="eyebrow">Step 4 of 7 · Optional</p>
+        <h2 id="photos-title">Share photos of the space today</h2>
+        <p class="intro">Photos can help Mark prepare, but a walkthrough is the preferred way to understand the space and exchange ideas with you.</p>
+        <label class="upload-zone" for="photo-input">
+          <span class="upload-icon">＋</span>
+          <b>Add photos from your device</b>
+          <small>JPG, PNG, or HEIC · up to 10 files</small>
+        </label>
+        <input id="photo-input" type="file" accept="image/*" multiple hidden>
+        <div id="photo-preview" class="photo-preview" aria-live="polite"></div>
+        <label>Notes about the photos <span class="optional">optional</span><textarea id="photo-notes" rows="3" placeholder="The wall beside the refrigerator might be removable…"></textarea></label>
+        <button class="button primary next" data-go="contact">Continue</button>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="contact" aria-labelledby="contact-title">
+      <div class="content">
+        <button class="back" data-go="photos">← Back</button>
+        <p class="eyebrow">Step 5 of 7</p>
+        <h2 id="contact-title">Where is the project, and how should Renew reach you?</h2>
+        <p class="intro">Address fields are ready for Google Places Autocomplete and Address Validation. Contact permission is recorded separately.</p>
+        <form id="contact-form" class="form-grid">
+          <label>Full name<input name="name" autocomplete="name" required></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Phone<input name="phone" type="tel" autocomplete="tel" required></label>
+          <label>Preferred contact<select name="preferredContact" required><option value="">Choose one</option><option value="phone">Phone call</option><option value="email">Email</option><option value="sms">Text message</option></select></label>
+          <label class="full">Project address<input id="address-input" name="address1" autocomplete="street-address" required placeholder="Start typing the property address"></label>
+          <label>City<input name="city" autocomplete="address-level2" required></label>
+          <label>State<select name="state" autocomplete="address-level1" required><option value="MA">Massachusetts</option><option value="CT">Connecticut</option><option value="RI">Rhode Island</option></select></label>
+          <label>ZIP code<input name="postalCode" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" required></label>
+          <label class="full check"><input name="contactConsent" type="checkbox" required><span>I authorize Renew to contact me about this project by phone or email.</span></label>
+          <label class="full check"><input name="smsConsent" type="checkbox"><span>I agree to receive project-related text messages from Renew at the number above. Message and data rates may apply. Reply STOP to opt out. <b>Optional.</b></span></label>
+        </form>
+        <button class="button primary next" data-validate="contact-form" data-next="walkthrough">Continue</button>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="walkthrough" aria-labelledby="walkthrough-title">
+      <div class="content">
+        <button class="back" data-go="contact">← Back</button>
+        <p class="eyebrow">Step 6 of 7</p>
+        <h2 id="walkthrough-title">Request a walkthrough</h2>
+        <p class="intro">Choose a few workable windows. Once Google Calendar is connected, Gemini can replace these preferences with Mark’s live availability.</p>
+        <form id="walkthrough-form" class="form-grid">
+          <label>Preferred date<input name="date1" type="date" required></label>
+          <label>Preferred time<select name="time1" required><option value="">Choose one</option><option>Morning</option><option>Midday</option><option>Afternoon</option><option>Early evening</option></select></label>
+          <label>Alternate date<input name="date2" type="date"></label>
+          <label>Alternate time<select name="time2"><option value="">Choose one</option><option>Morning</option><option>Midday</option><option>Afternoon</option><option>Early evening</option></select></label>
+          <label class="full">Access or scheduling notes <span class="optional">optional</span><textarea name="notes" rows="3" placeholder="Gate code, parking, best time to call…"></textarea></label>
+        </form>
+        <div class="notice">This is a request, not a confirmed appointment. Renew will confirm the walkthrough personally.</div>
+        <button class="button primary next" data-validate="walkthrough-form" data-next="review">Review My Request</button>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="review" aria-labelledby="review-title">
+      <div class="content">
+        <button class="back" data-go="walkthrough">← Back</button>
+        <p class="eyebrow">Step 7 of 7</p>
+        <h2 id="review-title">Review your home vision</h2>
+        <p class="intro">This is the structured record Gemini, Firestore, Storage, and Calendar will use.</p>
+        <div id="review-card" class="review-card"></div>
+        <div id="integration-note" class="notice integration"></div>
+        <button id="submit-request" class="button primary">Share My Vision with Renew</button>
+        <button class="button subtle" data-go="details">Edit Project Details</button>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="confirmation" aria-labelledby="confirmation-title">
+      <div class="content centered">
+        <div class="success-mark">✓</div>
+        <p class="eyebrow">Request prepared</p>
+        <h2 id="confirmation-title">Your home vision is ready for Renew</h2>
+        <p id="confirmation-copy" class="intro"></p>
+        <div class="stack">
+          <a class="button primary" id="email-fallback" href="#">Send the prepared email to Mark</a>
+          <button class="button subtle" data-go="status">View My Request</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen paper" data-screen="status" aria-labelledby="status-title">
+      <div class="content">
+        <button class="back" data-go="home">← Home</button>
+        <p class="eyebrow">Customer project status</p>
+        <h2 id="status-title">Your Renew request</h2>
+        <div id="customer-status" class="status-card"></div>
+        <p class="intro">When authentication and Firestore are connected, this page becomes the customer portal for messages, documents, appointments, estimates, invoices, and project updates.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>Renew Home Improvement · Webster, Worcester County & surrounding areas · <a href="https://renewhomecontractor.com">renewhomecontractor.com</a></footer>
+  <script src="api-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

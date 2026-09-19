@@ -1,0 +1,176 @@
+{
+  "entities": {
+    "lead": {
+      "title": "Lead",
+      "description": "Homeowner project lead submission",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "status": { "type": "string", "enum": ["new", "reviewed", "scheduled", "completed", "archived"] },
+        "source": { "type": "string" },
+        "submittedAt": { "type": "string", "format": "date-time" },
+        "customer": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "email": { "type": "string", "format": "email" },
+            "phone": { "type": "string" },
+            "preferredContact": { "type": "string" }
+          }
+        },
+        "property": {
+          "type": "object",
+          "properties": {
+            "address1": { "type": "string" },
+            "city": { "type": "string" },
+            "state": { "type": "string" },
+            "postalCode": { "type": "string" },
+            "addressValidated": { "type": "boolean" }
+          }
+        },
+        "project": {
+          "type": "object",
+          "properties": {
+            "serviceId": { "type": "string" },
+            "serviceLabel": { "type": "string" },
+            "problem": { "type": "string" },
+            "vision": { "type": "string" },
+            "timeline": { "type": "string" },
+            "budget": { "type": "string" },
+            "photoNotes": { "type": "string" }
+          }
+        },
+        "walkthrough": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string" },
+            "preferredDate": { "type": "string" },
+            "preferredTime": { "type": "string" },
+            "alternateDate": { "type": "string" },
+            "alternateTime": { "type": "string" },
+            "notes": { "type": "string" }
+          }
+        },
+        "consent": {
+          "type": "object",
+          "properties": {
+            "contact": { "type": "boolean" },
+            "sms": { "type": "boolean" },
+            "source": { "type": "string" }
+          }
+        },
+        "ai": {
+          "type": "object",
+          "properties": {
+            "projectType": { "type": "string" },
+            "summary": { "type": "string" },
+            "suggestedNextAction": { "type": "string" }
+          }
+        },
+        "photos": {
+          "type": "array",
+          "items": { "type": "object" }
+        }
+      },
+      "required": ["status", "submittedAt"]
+    },
+    "user": {
+      "title": "User",
+      "description": "User profile with role authorization",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "mark", "staff", "customer"] },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role"]
+    },
+    "prospect": {
+      "title": "Prospect",
+      "description": "Target homeowner prospect for Worcester County & Tri-State marketing campaigns",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "town": { "type": "string" },
+        "county": { "type": "string" },
+        "state": { "type": "string" },
+        "homeType": { "type": "string" },
+        "yearBuilt": { "type": "number" },
+        "estValue": { "type": "number" },
+        "primaryOpportunity": { "type": "string" },
+        "campaignId": { "type": "string" },
+        "dripStage": { "type": "number" },
+        "status": { "type": "string", "enum": ["new", "contacted", "drip_active", "text_approved", "opted_out", "converted"] },
+        "textApprovalStatus": { "type": "string", "enum": ["not_requested", "pending", "approved", "declined"] },
+        "optOutStatus": { "type": "boolean" },
+        "optOutAt": { "type": "string" },
+        "optOutReason": { "type": "string" },
+        "lastContactedAt": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "county", "status"]
+    },
+    "campaign": {
+      "title": "Campaign",
+      "description": "Targeted marketing email and drip campaigns with advertising messages",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "targetCounty": { "type": "string" },
+        "targetService": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "active", "paused", "completed"] },
+        "advertisingHeadline": { "type": "string" },
+        "advertisingOffer": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "targetCounty", "status"]
+    },
+    "inboxMessage": {
+      "title": "InboxMessage",
+      "description": "Inbound homeowner inquiry or outbound drip email/SMS message",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "prospectId": { "type": "string" },
+        "prospectName": { "type": "string" },
+        "prospectEmail": { "type": "string" },
+        "channel": { "type": "string", "enum": ["email", "sms"] },
+        "direction": { "type": "string", "enum": ["inbound", "outbound"] },
+        "subject": { "type": "string" },
+        "content": { "type": "string" },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["prospectId", "content", "channel", "direction"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "schema": "lead",
+      "description": "Submitted homeowner project leads and walkthrough requests"
+    },
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "System users and authorization roles"
+    },
+    "/prospects/{prospectId}": {
+      "schema": "prospect",
+      "description": "Homeowner prospects targeted for email drip outreach"
+    },
+    "/campaigns/{campaignId}": {
+      "schema": "campaign",
+      "description": "Marketing and advertising campaigns"
+    },
+    "/inbox/{messageId}": {
+      "schema": "inboxMessage",
+      "description": "Inbox email and SMS messages from prospects"
+    }
+  }
+}
