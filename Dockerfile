@@ -27,6 +27,11 @@ RUN npm install --omit=dev
 # Copy compiled server and frontend build from builder
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/firebase-applet-config.json* ./
 
-# Start server (listens on process.env.PORT provided by Railway, or 3000)
+# Expose ports commonly used by Railway Edge Proxy
+EXPOSE 3000
+EXPOSE 8080
+
+# Start server (listens on process.env.PORT provided by Railway, and also fallbacks 3000/8080)
 CMD ["node", "dist/server.cjs"]

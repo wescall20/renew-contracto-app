@@ -322,8 +322,8 @@ async function startServer() {
   // API ROUTES
   // ==========================================
 
-  // Health & Service Status
-  app.get('/api/health', (req, res) => {
+  // Health & Service Status (Support standard healthcheck paths)
+  app.get(['/health', '/healthz', '/api/health'], (req, res) => {
     res.json({
       status: 'ok',
       service: 'Renew Home Improvement Backend',
@@ -1441,9 +1441,29 @@ Directly answer their query, propose a free walkthrough, and preserve Mark's rep
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Renew Full-Stack Server running on port ${PORT}`);
+  const primaryPort = PORT;
+  const mainServer = app.listen(primaryPort, '0.0.0.0', () => {
+    console.log(`Renew Full-Stack Server running on primary port ${primaryPort}`);
   });
+  mainServer.on('error', (err: any) => {
+    console.error(`Error on primary port ${primaryPort}:`, err.message);
+  });
+
+  // Dual-bind to alternate standard Railway ports (3000, 8080) so edge proxy connects
+  // regardless of whether Railway routes to dynamic PORT, 3000, or 8080
+  const candidatePorts = [3000, 8080].filter(p => p !== primaryPort);
+  for (const candidatePort of candidatePorts) {
+    try {
+      const extraServer = app.listen(candidatePort, '0.0.0.0', () => {
+        console.log(`Renew server also listening on fallback port ${candidatePort}`);
+      });
+      extraServer.on('error', () => {
+        // Port in use or non-critical binding issue, silently ignore
+      });
+    } catch {
+      // Ignore
+    }
+  }
 }
 
 startServer();

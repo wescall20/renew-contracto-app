@@ -262,34 +262,6 @@ export default function App() {
         stats={headerStats}
       />
 
-      {/* Direct Railway Deployment & Zip Download Banner */}
-      <div className="bg-emerald-950/40 border-b border-emerald-500/30 px-4 py-3 text-xs text-emerald-100">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <span className="font-bold text-slate-950 bg-emerald-400 px-2 py-0.5 rounded text-[11px] uppercase tracking-wider">Ready for GitHub</span>
-            <span className="text-emerald-200">
-              Fresh package containing all code, server, and verified lockfiles for Railway/GitHub deployment.
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <a
-              href="/api/download-zip"
-              download="renew-contractor-app.zip"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded shadow transition-all cursor-pointer"
-            >
-              <span>📥 Download renew-contractor-app.zip</span>
-            </a>
-            <a
-              href="/api/download-bun-lock"
-              download="bun.lock"
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium rounded text-xs transition-colors cursor-pointer"
-            >
-              <span>bun.lock only</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/* Private Launch & Host Callout Banner */}
       <div className="bg-gradient-to-r from-slate-900 via-rose-950/20 to-slate-900 border-b border-slate-800/80 px-4 py-2 text-xs">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
