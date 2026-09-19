@@ -334,6 +334,22 @@ async function startServer() {
     });
   });
 
+  // Download bun.lock for Railway deployment
+  app.get('/api/download-bun-lock', (req, res) => {
+    const lockPath = path.join(process.cwd(), 'bun.lock');
+    res.setHeader('Content-Disposition', 'attachment; filename="bun.lock"');
+    res.setHeader('Content-Type', 'application/octet-stream');
+    res.sendFile(lockPath);
+  });
+
+  // Download complete project ZIP for GitHub upload
+  app.get('/api/download-zip', (req, res) => {
+    const zipPath = path.join(process.cwd(), 'public', 'renew-contractor-app.zip');
+    res.setHeader('Content-Disposition', 'attachment; filename="renew-contractor-app.zip"');
+    res.setHeader('Content-Type', 'application/zip');
+    res.sendFile(zipPath);
+  });
+
   // Mark Authentication Route
   app.post('/api/auth/login', (req, res) => {
     const { email, password } = req.body;
