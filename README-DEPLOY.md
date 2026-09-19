@@ -16,7 +16,7 @@ You can deploy this repository using either of these two fast, reliable options:
 ### Option B: Railway.app (Recommended GitHub Host)
 1. Go to [Railway.app](https://railway.app) and sign in with GitHub.
 2. Click **Start a New Project** > **Deploy from GitHub repo**.
-3. Select your private `renew-contractor-portal` repository.
+3. Select your private `renew-contractor-app` (or `renew-contractor-portal`) repository.
 4. Under **Variables**, add:
    - `GEMINI_API_KEY`: Your Google Gemini API Key
    - `APP_PRIVATE_PIN`: `4242` (or your chosen private passcode)
